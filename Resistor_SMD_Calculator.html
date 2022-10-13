@@ -85,7 +85,7 @@
     }
 
     const RenderResult = (res)=>{
-        if (res.includes("NaN")) res="CODICE NON ESISTENTE, RICONTROLLA";
+        if (res.includes("NaN")) res="This code doesn't exist, please retry!";
         document.getElementById("result").innerHTML=res;
     }
     const calcola=()=>{
