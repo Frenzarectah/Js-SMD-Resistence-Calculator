@@ -121,8 +121,8 @@
         return CalcZeros(result);
     }    
     const CalcZeros = (val)=>{
-        if(val>=1000) return val/1000+"KΩ";
-        else if(val>=1000000) return val/1000000+"MΩ";
+        if(val>=1000000) return val/1000000+"MΩ";
+	else if(val>=1000) return val/1000+"KΩ";
         else return val+"Ω";
     }
 </script>
