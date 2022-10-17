@@ -84,23 +84,18 @@
         "Y": 0.01,
         "Z": 0.001
     }
-
-    const RenderResult = (res)=>{
-        if (res.includes("NaN")) res="This code doesn't exist, please retry!";
-        document.getElementById("result").innerHTML=res;
-    }
     const calcola=()=>{
         let valor =  document.getElementById("SMD_VALUE").value.toUpperCase();
         evalDigits(valor);
     }
-
-    const isNumber = (val)=>{ return !isNaN(val)};
 
     const evalDigits = (val) =>{
         if(isNumber(val)&&(val.length=="3"||val.length=="4")) RenderResult(threeFourDigit(val));
         else if(val.toUpperCase().indexOf("R")>=0) RenderResult(resWithR(val));
         else RenderResult(EIAFormat(val));
     }
+    
+    const isNumber = (val)=>{ return !isNaN(val)};
 
     const threeFourDigit = (val)=>{
         let number = val.slice(0, val.length - 1);
@@ -111,20 +106,28 @@
 
     const resWithR= (val) =>{
         let comma = val.toUpperCase().indexOf("R");
-	    let sxPart = comma == 0 ? 0 : val.slice(0,comma);
-	    let dxPart = val.slice(comma+1);
+	let sxPart = comma == 0 ? 0 : val.slice(0,comma);
+	let dxPart = val.slice(comma+1);
         if(dxPart!=0) return (sxPart+"."+dxPart+"Ω");
         else return (sxPart+"Ω");
     }
     const EIAFormat = (val)=>{
         let result = EIAStandard[val.slice(0,2)]*multi[val.slice(length-1)];
         return CalcZeros(result);
-    }    
+    } 
+    document.getElementById("SMD_VALUE").addEventListener("keyup",e=>{
+        if (e.keyCode === 13) calcola();
+    });
+    const RenderResult = (res)=>{
+        if (res.includes("NaN")) res="This code doesn't exist, please retry!";
+        document.getElementById("result").innerHTML=res;
+    }
     const CalcZeros = (val)=>{
         if(val>=1000000) return val/1000000+"MΩ";
 	else if(val>=1000) return val/1000+"KΩ";
         else return val+"Ω";
     }
+
 </script>
 </body>
 </html>
